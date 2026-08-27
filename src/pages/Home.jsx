@@ -12,10 +12,14 @@ import {
   Building2,
   ShieldCheck,
   Star,
-  ChevronRight
+  ChevronRight,
+  Eye,
+  Wand2
 } from 'lucide-react';
 import SectionHeading from '../components/ui/SectionHeading';
 import ProductCard from '../components/ui/ProductCard';
+import RotatingText from '../components/originkit/ui/text-carousel';
+import DitherReveal from '../components/originkit/ui/dither-reveal';
 import { fetchProducts, fetchCategories } from '../services/api';
 import { openWhatsAppEnquiry } from '../services/whatsapp';
 
@@ -45,7 +49,7 @@ export default function Home() {
   return (
     <div className="space-y-20 sm:space-y-28 pb-16">
       
-      {/* 1. HERO SECTION */}
+      {/* 1. HERO SECTION WITH ORIGINKIT ROTATING TEXT */}
       <section className="relative overflow-hidden hero-pattern pt-8 pb-16 sm:pt-14 sm:pb-24 border-b border-canvas-subtle">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -61,11 +65,36 @@ export default function Home() {
                 </span>
               </div>
 
-              {/* Main Headline */}
-              <h1 className="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-burgundy-950 leading-[1.08]">
-                Make It <br className="hidden sm:inline" />
-                <span className="italic font-normal text-burgundy-700 font-serif">Personal.</span>
-              </h1>
+              {/* Originkit Text Carousel Heading */}
+              <div className="py-2">
+                <h1 className="sr-only">Make It Personal - Mad Bespoke Luxury Gifts</h1>
+                <div className="flex justify-center lg:justify-start">
+                  <RotatingText
+                    prefix="Make It"
+                    texts={["Personal.", "Timeless.", "Artisanal.", "Bespoke.", "Memorable."]}
+                    prefixColor="#2B0E12"
+                    color="#FAF7F4"
+                    badgeBackground="#722F37"
+                    badgeRadius={14}
+                    badgePaddingX={16}
+                    badgePaddingY={6}
+                    gap={12}
+                    font={{
+                      fontFamily: "'Playfair Display', Georgia, serif",
+                      fontWeight: 700,
+                      fontSize: 'clamp(2.3rem, 5.5vw, 4.4rem)',
+                      lineHeight: '1.18em',
+                      textAlign: 'left',
+                    }}
+                    transition={{
+                      type: "tween",
+                      duration: 0.45,
+                      ease: "easeOut",
+                      staggerChildren: 0.03,
+                    }}
+                  />
+                </div>
+              </div>
 
               {/* Subtext */}
               <p className="text-base sm:text-xl text-ink-secondary max-w-2xl mx-auto lg:mx-0 leading-relaxed">
@@ -440,7 +469,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 8. WHATSAPP CONCIERGE BANNER */}
+      {/* 8. ORIGINKIT DITHER REVEAL INTERACTIVE ARTISAN SHOWCASE */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-canvas-card border-2 border-gold-400 rounded-3xl p-6 sm:p-12 shadow-warm-lg grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          <div className="lg:col-span-6 space-y-4 text-center lg:text-left">
+            <div className="inline-flex items-center gap-1.5 bg-burgundy-100 text-burgundy-800 text-xs font-semibold px-3.5 py-1 rounded-full uppercase tracking-wider border border-burgundy-200 shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-gold-600" />
+              Interactive Craftsmanship
+            </div>
+
+            <h2 className="font-serif text-3xl sm:text-4xl font-bold text-burgundy-950 leading-tight">
+              Laser Precision Revealed
+            </h2>
+
+            <p className="text-sm sm:text-base text-ink-secondary leading-relaxed">
+              Every Mad Bespoke piece starts from raw industrial-grade materials before being transformed through precision fiber laser optics. Hover or glide across the canvas to peel away the dither matrix and reveal the finished luxury luster.
+            </p>
+
+            <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs font-semibold text-burgundy-900">
+              <span className="inline-flex items-center gap-1.5 bg-canvas px-3 py-1.5 rounded-xl border border-gold-300 shadow-warm-sm">
+                <Wand2 className="w-3.5 h-3.5 text-gold-600" />
+                Hover & Touch Interactive
+              </span>
+              <span className="inline-flex items-center gap-1.5 bg-canvas px-3 py-1.5 rounded-xl border border-gold-300 shadow-warm-sm">
+                <Eye className="w-3.5 h-3.5 text-burgundy-700" />
+                Live WebGL Dither Shader
+              </span>
+            </div>
+          </div>
+
+          <div className="lg:col-span-6">
+            <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden border-2 border-gold-500 shadow-warm-lg relative bg-burgundy-950 group">
+              <DitherReveal
+                image="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?auto=format&fit=crop&w=1200&q=80"
+                ditherStyle="bayer8"
+                dotSize={5}
+                revealRadius={140}
+                revealSoftness={40}
+                wave={true}
+                waveSpeed={75}
+                waveDensity={28}
+              />
+              <div className="absolute bottom-3 left-3 bg-burgundy-950/85 backdrop-blur-md text-gold-200 text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-gold-500/40 pointer-events-none shadow-md">
+                ✦ Interactive Shader Reveal
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 9. WHATSAPP CONCIERGE BANNER */}
       <section className="max-w-5xl mx-auto px-4 text-center">
         <div className="bg-canvas-card border-2 border-gold-400 p-8 sm:p-12 rounded-3xl shadow-warm-lg space-y-5">
           <div className="w-14 h-14 rounded-full bg-green-100 text-green-700 mx-auto flex items-center justify-center shadow-inner">
