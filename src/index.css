@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #E8DDD3;
+    --bg-card: #FAF7F4;
+    --burgundy: #722F37;
+    --burgundy-dark: #5A232A;
+    --gold: #B8944F;
+    --text-primary: #2C1810;
+    --text-secondary: #5A4A41;
+  }
+
+  body {
+    background-color: #E8DDD3;
+    color: #2C1810;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-serif-luxury {
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #E8DDD3;
+}
+::-webkit-scrollbar-thumb {
+  background: #B8944F;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #722F37;
+}
+
+/* Glassmorphism & Luxury effects */
+.glass-header {
+  background: rgba(232, 221, 211, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.gold-gradient-border {
+  border-image: linear-gradient(to bottom right, #DFC89F, #B8944F, #82642C) 1;
+}
+
+.gold-shimmer {
+  background: linear-gradient(135deg, #FAF7F4 0%, #F5EDE4 50%, #FAF7F4 100%);
+}
+
+.hero-pattern {
+  background-color: #E8DDD3;
+  background-image: radial-gradient(#D9C8BA 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Smooth transitions */
+.smooth-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 14px rgba(37, 211, 102, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-pulse {
+  animation: pulse-ring 2.5s infinite cubic-bezier(0.45, 0, 0.55, 1);
+}
