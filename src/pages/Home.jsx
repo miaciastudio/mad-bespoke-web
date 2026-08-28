@@ -80,7 +80,7 @@ export default function Home() {
                     badgePaddingY={6}
                     gap={12}
                     font={{
-                      fontFamily: "'Fredoka', 'Paytone One', sans-serif",
+                      fontFamily: "'Fredoka', cursive, sans-serif",
                       fontWeight: 700,
                       fontSize: 'clamp(2.3rem, 5.5vw, 4.4rem)',
                       lineHeight: '1.18em',
