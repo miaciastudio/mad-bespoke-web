@@ -12,42 +12,52 @@ export async function openWhatsAppEnquiry({
   packaging = '',
   quantity = 1,
   customerName = '',
+  customerPhone = '',
   type = 'retail',
   note = '',
 }) {
   let message = '';
 
-  if (type === 'bulk_corporate') {
-    message = `👑 *MAD BESPOKE — CORPORATE & BULK GIFTING INQUIRY*
+  const isBulk = Number(quantity) >= 20 || type === 'bulk_corporate';
+
+  if (isBulk || type === 'bulk_corporate') {
+    message = `👑 *MAD BESPOKE — BULK & CORPORATE GIFTING ORDER*
 ━━━━━━━━━━━━━━━━━━━━
-Hi Mad Bespoke Team! I would like to request a bulk quote for bespoke gifting.
+Hi Mad Bespoke Team! I want to place a bulk order for:
 
-📋 *Requirement Details:*
-• *Event / Company:* ${customerName || 'Corporate Inquiry'}
-• *Product / Item:* ${product ? product.name : 'Bespoke Curated Hamper / Gift Sets'}
-• *Estimated Quantity:* ${quantity || '50+ units'}
-• *Customisation Required:* ${customText || 'Company Logo & Name Engraving'}
-• *Additional Notes:* ${note || 'Please share catalog & tiered bulk pricing'}
-
-Please share your best bulk rates and sample timelines. Thank you!`;
+🛍️ *Product:* ${product ? product.name : 'Bespoke Curated Hamper / Gift Sets'}
+🔢 *Quantity:* ${quantity} Units (Bulk Pricing Requested)
+👤 *Customer Name:* ${customerName || 'Bespoke Client'}
+📱 *Phone:* ${customerPhone || 'Shared via WhatsApp'}
+✨ *Custom Engraving / Design:* ${customText ? `"${customText}"` : 'Logo & Name Engraving'}
+🎨 *Variant / Finish:* ${variant || 'Standard'}
+🎁 *Packaging:* ${packaging || 'Presentation Box'}
+${note ? `📝 *Note:* ${note}\n` : ''}
+💬 *Contact Info:* Insta: @mad-bespoke | Call/WhatsApp: 9730672323
+Please share the best bulk rates and digital draft mockup!`;
   } else if (product) {
-    message = `✨ *MAD BESPOKE — PRODUCT ORDER ENQUIRY*
+    message = `✨ *MAD BESPOKE — ORDER & CUSTOMISATION*
 ━━━━━━━━━━━━━━━━━━━━
 Hi! I want to order this bespoke piece:
 
 🏷️ *Product:* ${product.name}
-💰 *Price:* ₹${product.price} (MRP: ₹${product.mrp || product.price})
+💰 *Rate:* ₹${product.price} Per unit (MRP: ₹${product.mrp || product.price})
+🔢 *Quantity:* ${quantity} piece(s)
+👤 *Customer Name:* ${customerName || 'Bespoke Client'}
+📱 *Contact:* ${customerPhone || 'Shared via WhatsApp'}
 ✍️ *Customisation / Name:* ${customText ? `"${customText}"` : 'To be confirmed'}
 🎨 *Color / Variant:* ${variant || 'Standard'}
-📦 *Packaging:* ${packaging || product.packaging || 'Standard'}
-🔢 *Quantity:* ${quantity} piece(s)
-
-${note ? `📝 *Note:* ${note}\n` : ''}
-Please confirm availability and dispatch time. Thank you!`;
+📦 *Packaging:* ${packaging || product.packaging || 'Standard Paper Box'}
+${note ? `📝 *Special Request:* ${note}\n` : ''}
+💬 *Contact Info:* Insta: @mad-bespoke | 9730672323
+Please confirm availability and dispatch timeline. Thank you!`;
   } else {
-    message = `✨ *MAD BESPOKE — BESPOKE GIFTING INQUIRY*
+    message = `✨ *MAD BESPOKE — BESPOKE INQUIRY*
 ━━━━━━━━━━━━━━━━━━━━
-Hi Mad Bespoke! I am looking for a custom personalized gift. Please share your catalog and latest collection details!`;
+Hi Mad Bespoke Team!
+👤 *Name:* ${customerName || 'Customer'}
+📱 *Phone:* ${customerPhone || 'N/A'}
+I want to order custom personalized gifts. Please share your catalog and bulk rates!`;
   }
 
   // Log lead to database asynchronously
@@ -55,9 +65,10 @@ Hi Mad Bespoke! I am looking for a custom personalized gift. Please share your c
     product_id: product ? product.id : null,
     product_name: product ? product.name : (type === 'bulk_corporate' ? 'Corporate Bulk Inquiry' : 'General Bespoke Inquiry'),
     customer_name: customerName || 'WhatsApp Customer',
-    customisation_note: `Custom: "${customText}" | Variant: ${variant} | Qty: ${quantity}`,
+    phone: customerPhone || '',
+    customisation_note: `Name: ${customerName} | Phone: ${customerPhone} | Custom: "${customText}" | Variant: ${variant} | Packaging: ${packaging} | Qty: ${quantity}`,
     quantity: Number(quantity) || 1,
-    type,
+    type: isBulk ? 'bulk_corporate' : 'retail',
   }).catch((e) => console.warn('Lead log error:', e));
 
   const encoded = encodeURIComponent(message);
