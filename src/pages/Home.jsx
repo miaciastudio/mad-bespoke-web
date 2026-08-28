@@ -203,32 +203,36 @@ export default function Home() {
           subtitle="Discover over 70+ personalised products crafted for elegance and utility."
         />
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 sm:gap-8 justify-items-center">
           {categories.map((cat) => {
             const logoSrc = cat.image_url || `/categories/${cat.id}.jpg`;
             return (
               <Link
                 key={cat.id}
                 to={`/shop?category=${cat.id}`}
-                className="group bg-canvas-card hover:bg-burgundy-900 border border-canvas-subtle hover:border-gold-500 rounded-2xl p-4 sm:p-5 text-center shadow-warm hover:shadow-warm-lg transition-all duration-300 flex flex-col items-center justify-between min-h-[180px]"
+                className="group flex flex-col items-center text-center cursor-pointer transition-transform duration-300"
               >
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-white p-1 shadow-warm border-2 border-gold-400 group-hover:border-gold-300 group-hover:scale-110 transition-all duration-300 flex items-center justify-center">
-                  <img
-                    src={logoSrc}
-                    alt={cat.name}
-                    className="w-full h-full object-cover rounded-full"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = `/categories/${cat.id}.jpg`;
-                    }}
-                  />
+                {/* Luxury Circular Image Container */}
+                <div className="relative w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full p-1 bg-gradient-to-br from-gold-400 via-gold-200 to-burgundy-800 shadow-warm group-hover:shadow-gold-glow group-hover:scale-105 transition-all duration-300">
+                  <div className="w-full h-full rounded-full overflow-hidden bg-white p-0.5 border border-gold-300">
+                    <img
+                      src={logoSrc}
+                      alt={cat.name}
+                      className="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-500"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = `/categories/${cat.id}.jpg`;
+                      }}
+                    />
+                  </div>
                 </div>
                 
-                <div className="mt-3 w-full">
-                  <h3 className="font-serif text-sm sm:text-base font-semibold text-burgundy-950 group-hover:text-gold-100 transition-colors line-clamp-2">
+                {/* Text Outside Below Circle */}
+                <div className="mt-3.5 space-y-0.5 max-w-[140px]">
+                  <h3 className="font-serif text-sm sm:text-base font-bold text-burgundy-950 group-hover:text-burgundy-700 transition-colors leading-tight">
                     {cat.name}
                   </h3>
-                  <span className="text-[11px] text-ink-muted group-hover:text-burgundy-200 transition-colors mt-1 block">
+                  <span className="text-[11px] sm:text-xs text-ink-muted group-hover:text-gold-700 font-medium transition-colors block">
                     {cat.product_count ? `${cat.product_count} Products` : 'View Range →'}
                   </span>
                 </div>
