@@ -203,27 +203,38 @@ export default function Home() {
           subtitle="Discover over 70+ personalised products crafted for elegance and utility."
         />
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
-          {categories.map((cat) => (
-            <Link
-              key={cat.id}
-              to={`/shop?category=${cat.id}`}
-              className="group bg-canvas-card hover:bg-burgundy-900 border border-canvas-subtle hover:border-gold-500 rounded-2xl p-4 sm:p-5 text-center shadow-warm hover:shadow-warm-lg transition-all duration-300 flex flex-col items-center justify-between min-h-[160px]"
-            >
-              <div className="w-14 h-14 rounded-full bg-canvas group-hover:bg-burgundy-800 flex items-center justify-center text-2xl shadow-inner border border-gold-300/60 group-hover:scale-110 transition-all duration-300">
-                {cat.icon || '🎁'}
-              </div>
-              
-              <div className="mt-3">
-                <h3 className="font-serif text-sm sm:text-base font-semibold text-burgundy-950 group-hover:text-gold-100 transition-colors">
-                  {cat.name}
-                </h3>
-                <span className="text-[11px] text-ink-muted group-hover:text-burgundy-200 transition-colors mt-0.5 block">
-                  {cat.product_count ? `${cat.product_count} Products` : 'View Range →'}
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+          {categories.map((cat) => {
+            const logoSrc = cat.image_url || `/categories/${cat.id}.jpg`;
+            return (
+              <Link
+                key={cat.id}
+                to={`/shop?category=${cat.id}`}
+                className="group bg-canvas-card hover:bg-burgundy-900 border border-canvas-subtle hover:border-gold-500 rounded-2xl p-4 sm:p-5 text-center shadow-warm hover:shadow-warm-lg transition-all duration-300 flex flex-col items-center justify-between min-h-[180px]"
+              >
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-white p-1 shadow-warm border-2 border-gold-400 group-hover:border-gold-300 group-hover:scale-110 transition-all duration-300 flex items-center justify-center">
+                  <img
+                    src={logoSrc}
+                    alt={cat.name}
+                    className="w-full h-full object-cover rounded-full"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = `/categories/${cat.id}.jpg`;
+                    }}
+                  />
+                </div>
+                
+                <div className="mt-3 w-full">
+                  <h3 className="font-serif text-sm sm:text-base font-semibold text-burgundy-950 group-hover:text-gold-100 transition-colors line-clamp-2">
+                    {cat.name}
+                  </h3>
+                  <span className="text-[11px] text-ink-muted group-hover:text-burgundy-200 transition-colors mt-1 block">
+                    {cat.product_count ? `${cat.product_count} Products` : 'View Range →'}
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

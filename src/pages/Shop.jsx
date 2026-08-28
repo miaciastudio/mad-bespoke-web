@@ -138,16 +138,23 @@ export default function Shop() {
             <button
               key={cat.id}
               onClick={() => updateParam('category', cat.id)}
-              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-all duration-200 ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap flex items-center gap-2 transition-all duration-200 ${
                 isActive
                   ? 'bg-burgundy-700 text-gold-100 shadow-warm-sm'
                   : 'bg-canvas-card text-ink-secondary hover:bg-canvas border border-canvas-subtle'
               }`}
             >
-              <span>{cat.icon}</span>
+              <img
+                src={cat.image_url || `/categories/${cat.id}.jpg`}
+                alt=""
+                className="w-4 h-4 rounded-full object-cover border border-gold-400/80"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
               <span>{cat.name}</span>
               {cat.product_count !== undefined && (
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ml-1 ${
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ml-0.5 ${
                   isActive ? 'bg-burgundy-900 text-gold-300' : 'bg-canvas text-ink-muted'
                 }`}>
                   {cat.product_count}
